@@ -337,9 +337,7 @@ padding:.01rem .05rem;
 /*.am-list:not([am-version]).twoline .am-list-item:first-child{
 	padding-top: .155rem;
 }*/
-.express_content{
-	display:none;
-}
+
 .am-notice:not([am-version]).header_notification{
 	height:0.36rem;
 	color: #ff8200;

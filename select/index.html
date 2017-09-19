@@ -1,132 +1,86 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>选择快递</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <meta name="format-detection" content="telephone=no"/>
-  <meta name="format-detection" content="email=no"/>
-  <meta name="data-bizType" content="express"/>
-  <meta name="data-aspm" content="a106"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="format-detection" content="email=no" />
+  <meta name="data-bizType" content="express" />
+  <meta name="data-aspm" content="a106" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
   <!-- <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.0/rem/antui.css"/> -->
-  <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.12/rem/antui.css"/>
+  <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.12/rem/antui.css" />
   <!-- <link rel="stylesheet" href="https://as.alipayobjects.com/g/h5-lib/antui/9.9.0-2/rem/??widget/popmenu.css,widget/bubble.css,widget/notice.css,widget/inform.css,widget/dialog.css"/> -->
   <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.12/rem/widget/notice.css" />
-  <link rel="stylesheet" type="text/css" href="../css/main.css">
-  <link rel="stylesheet" href="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.css"/>
-  <style>
-    .marquee-move{
-      height:.365rem;
-      -webkit-animation:  marquee 20s linear 1s infinite;
-      -o-animation:  marquee 20s linear 1s infinite;
-      animation:  marquee 20s linear 1s infinite;
-      position: absolute;
-      left:-100%;
-      white-space: nowrap;
-    }
-    @-webkit-keyframes marquee {
-        0% { left: 0; }
-        100% { left: -100%; }
-    }
-    @-moz-keyframes marquee {
-      0% { left: 0; }
-      100% { left: -100%; }
-    }
-    @-o-keyframes marquee {
-      0% { left: 0; }
-      100% { left: -100%; }
-    }
-    @keyframes marquee {
-      0% { left: 0; }
-      100% { left: -100%; }
-    }
-  </style>
-
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+  <link rel="stylesheet" href="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.css" />
 </head>
+
 <body ontouchstart="" data-aspm="b2108">
   <div class="express_content" style="margin-top: .1rem;padding-bottom:1.1rem;">
-      <div class="hairline-top am-notice header_notification"  style="display:none;background-color:#fefcec">
-         <div class="am-notice-content" >
-             <div id="outcontent" style="position:relative;height:.36rem;overflow:hidden">
-                   <div class="marquee-move">
-                       <span id="kong" style="display:inline-block;height:.36rem;float:left;"></span>
-                       <span class= "noticeval" data-spmv="a106.b2108.c4625" style="display:inline-block;height:.36rem;line-height:.365rem;margin-left:-15px;float:left">银行卡银行卡银</span>
-                   </div>
-             </div>
+    <div class="am-list twoline management_list select_expresscontent" data-spmv="a106.b2108.c4626">
+      <div  class="am-list-item typelink" style="height:.90rem">
+        <div class="am-list-thumb choice_leftlogo">
+          <img src="this.logisMerchLog" alt="">
+        </div>
+        <div class="am-list-content" style="padding-top:.06rem;overflow:visible">
+          <div class="am-list-title list_lineheight" style="overflow:visible !important">
+            <span class="compName" style="font-size:.16rem">顺丰</span>
+            <span class="hot_icon hoticon1">热</span>
+            <span class="hot_icon newicon1">新</span>
+            <div class="am-list-right-brief" style="right:-0.72rem;overflow:visible">1234567876543</div>
           </div>
+          <span class="am-ft-gray advertisementvals" style="font-size:.14rem;padding-top: 0.04rem;padding-bottom: .01rem;">快递</span>
+          <div class="am-ft-orange bubble_font" style="height:.14rem;line-height:.14rem;"> <span style="">tagval</span></div>
+        </div>
+        <div style="position:relative;top:.12rem;">
+
+        <div class="am-ft-orange" style="display:block;;font-size: .15rem;">0.01元起</div>
+        <span class="am-ft-orange" style="align-self:none; font-size: .15rem;">0.01元起</span>
+      </div>
+        <div class="am-list-arrow"><span class="am-icon horizontal" style="vertical-align:middle"><img src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/indicator_icon.png"/></span></div>
+      </div>
+
+
+
     </div>
-  	<div class="am-ft-13 am-ft-center sorrynotic" style="display:none;padding-top:7px;padding-bottom:7px;height: 0.365rem;">
-  		<p style="height:18px;line-height:18px;">抱歉，您的地址不在<span id="oldExpressName"></span>快递覆盖范围已为您推荐以下快递</p>
-  	</div>
-  	<div class="select_expresscontent_empty" style="display:none;margin:0 auto;text-align: center;width: 100%;height: 100%; display: -webkit-box;-webkit-box-orient: vertical;box-orient: vertical;margin-top:1rem;">
-      <img src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/locationlogo.png" style="width:1.35rem; height:1.35rem;">
-  	  <div style="font-size: .14rem;color: #888;line-height: .16rem;">暂时没有可服务的快递公司</div>
-  	  <div style="line-height: .16rem; font-size: .14rem;color: #888;margin: .09rem .15rem 0;">服务范围扩展中，敬请期待</div>
-  	</div>
-      <div class="am-list twoline management_list select_expresscontent" data-spmv="a106.b2108.c4626">
-        $.each(tagval, function(i){
-                                 taghtml += <span style="">+tagval[i]</span>
-                             })
-                             if(this.presetWeightPrice!= && this.presetWeightPrice!=null){
-                                 sHtml=<div class="am-ft-orange" style="display:block;;font-size: .15rem;">+this.presetWeightPrice*0.01元起</div>;
-                             }
-                             var spmv_i = i+1;
+    <div class="am-loading" aria-label="加载中" style="display:none">
+      <i class="am-icon loading" aria-hidden="true"></i>
+      <div class="am-loading-text">加载中</div>
+    </div>
 
-                 <div>
-                   <div class="am-list-thumb choice_leftlogo">
-                                 <img src="+this.logisMerchLog" alt="">
-                                 </div>
-                                 <div class="am-list-content" style="padding-top:.06rem;">
-                                 <div class="am-list-title list_lineheight">
-                                 <span class="compName" style="font-size:.16rem">+this.logisMerchName</span>
-                                 <span class="hot_icon hoticon+this.hotStatus">热</span>
-                                 <span class="hot_icon newicon+this.newStatus">新</span>
-                                 </div>
-                                 <span class="am-ft-gray advertisementvals" style="font-size:.14rem;padding-top: 0.04rem;padding-bottom: .01rem;">+this.slogan</span>
-                                 <div class="am-ft-orange bubble_font" style="height:.14rem;line-height:.14rem;">+taghtml</div>
-                                 </div>
-                                 +<div class="am-ft-orange" style="display:block;;font-size: .15rem;">+this.presetWeightPrice*0.01元起</div>
-                                 <div class="am-list-arrow"><span class="am-icon horizontal" style="vertical-align:middle"><img src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/indicator_icon.png"/></span></div>
-                                 </div>
-
-
-
-      </div>
-      <div class="am-loading" aria-label="加载中" style="display:none">
-        <i class="am-icon loading" aria-hidden="true"></i>
-        <div class="am-loading-text">加载中</div>
-      </div>
-
-      <!-- <div class="swiper-container am-fixed am-fixed-bottom">
+    <!-- <div class="swiper-container am-fixed am-fixed-bottom">
         <div class="swiper-wrapper swiper_list">
         </div> -->
-        <!-- <div class="swiper-pagination spot_pagination"></div> -->
-      <!-- </div> -->
+    <!-- <div class="swiper-pagination spot_pagination"></div> -->
+    <!-- </div> -->
+  </div>
+  <div class="am-fixed am-fixed-bottom promotion-txt" style="width:100%;display:none" data-spmv="a106.b2108.c4627">
+    <div class="swiper-container">
+      <div class="swiper-wrapper swiper_list index_list"></div>
+      <div class="swiper-pagination"></div>
     </div>
-      <div class="am-fixed am-fixed-bottom promotion-txt" style="width:100%;display:none" data-spmv="a106.b2108.c4627">
-        <div class="swiper-container">
-          <div class="swiper-wrapper swiper_list index_list"></div>
-          <div class="swiper-pagination"></div>
-        </div>
-      </div>
+  </div>
 
 
 
-    <script src="https://as.alipayobjects.com/g/component/antbridge/1.1.1/antbridge.min.js"></script>
-    <script src="https://a.alipayobjects.com/static/fastclick/1.0.6/fastclick.min.js"></script>
-    <!-- <script src="https://as.alipayobjects.com/g/h5-lib/antui/9.9.0-2/rem/antui.js"></script> -->
-    <script src="https://a.alipayobjects.com/g/antui/antui/10.0.12/antui.js"></script>
-    <script src="https://a.alipayobjects.com/amui/zepto/1.1.3/zepto.js"></script>
-    <script src="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.js"></script>
-    <script type="text/javascript" src="https://os.alipayobjects.com/rmsportal/VVdXVYPWSSKQQYL.js"></script>
-    <!-- <script src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/js/area.js"></script> -->
-    <!-- <script type="text/javascript" src="../libs/area0120.js"> </script> -->
-    <!-- <script type="text/javascript" src="../libs/config.js"></script>
+  <script src="https://as.alipayobjects.com/g/component/antbridge/1.1.1/antbridge.min.js"></script>
+  <script src="https://a.alipayobjects.com/static/fastclick/1.0.6/fastclick.min.js"></script>
+  <!-- <script src="https://as.alipayobjects.com/g/h5-lib/antui/9.9.0-2/rem/antui.js"></script> -->
+  <script src="https://a.alipayobjects.com/g/antui/antui/10.0.12/antui.js"></script>
+  <script src="https://a.alipayobjects.com/amui/zepto/1.1.3/zepto.js"></script>
+  <script src="https://as.alipayobjects.com/g/component/swiper/3.2.7/swiper.min.js"></script>
+  <script type="text/javascript" src="https://os.alipayobjects.com/rmsportal/VVdXVYPWSSKQQYL.js"></script>
+  <!-- <script src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/js/area.js"></script> -->
+  <!-- <script type="text/javascript" src="../libs/area0120.js"> </script> -->
+  <!-- <script type="text/javascript" src="../libs/config.js"></script>
     <script type="text/javascript" src="../libs/common.js"></script>
     <script type="text/javascript" src="../js/selectExpress.js"></script> -->
 </body>
+
 </html>
