@@ -1,0 +1,47 @@
+header{
+	 border-bottom:1px solid #f2f2f2;
+}
+.ios-select-widget-box.olay {
+   background: rgba(0, 0, 0, 0.3);
+}
+.ios-select-widget-box.olay > div {
+	background-color: #f2f2f2;
+}
+.ios-select-widget-box header.iosselect-header {
+  	background-color: #fff;
+}
+.ios-select-widget-box header.iosselect-header a {
+  	color: #e94643;
+}
+.ios-select-widget-box header.iosselect-header a.sure {
+  	color:#108ee9;
+}
+.ios-select-widget-box ul li {
+   	color: #aeaeae;
+}
+.ios-select-widget-box.olay > div{
+	    background-color: white;
+}
+.ios-select-widget-box ul li.at {
+	color:#000;
+	font-size: .2rem;
+	opacity: 1;
+}
+.ios-select-widget-box ul li.side1 {
+	color:#a7a7a7;
+	font-size: .2rem;
+	opacity: .7;
+}
+.ios-select-widget-box ul li.side2 {
+	 color:#aeaeae;
+	 font-size: .2rem;
+	 opacity: .5;
+}
+
+.ios-select-widget-box.three-level-box .one-level-contain,
+.ios-select-widget-box.three-level-box .two-level-contain{
+	 width:33.3333333333%;
+}
+.ios-select-widget-box.three-level-box .three-level-contain{
+	 width:33.3333333333%;
+}
