@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <title>2级联动</title>
+    <link rel="stylesheet" type="text/css" href="./iosSelect.css">
+      <link rel="stylesheet" type="text/css" href="./iosSelect2.css">
+      <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.0/rem/antui.css"/>
+      <link rel="stylesheet" href="https://a.alipayobjects.com/g/antui/antui/10.0.0/rem/??widget/message.css,widget/notice.css,widget/page-result.css"/>
+      <link rel= "stylesheet"  href="https://a.alipayobjects.com/g/antui/antui/10.0.0/rem/widget/dialog.css"/>
+      <link rel="stylesheet" type="text/cs" href="./index.css" />
+      <style>
+         .dataItem {
+           border-radius: .05rem;
+           border: 1px #888 solid;
+           text-align:center;
+           width:90px;
+           height:60px;
+         }
+         .dataItem:not(:last-child) {
+            margin-right:20px;
+         }
+         .clickDisabled {
+
+           border-color:#ddd;
+           color:#ddd;
+         }
+         .clickDisabled span {
+             margin-top:5px;
+         }
+         .clickAbled {
+            padding-top:0;
+           border-color:#fff;
+           color:#fff;
+         }
+      </style>
+  </head>
+  <body>
+  	<div class="am-dialog-mask show dialog-saosao" style="display:none;"></div>
+	<div class="am-dialog show dialog-saosao" style="display:none;">
+	    <div class="am-dialog-wrap" style="background-color:#fff;">
+	        <div class="am-dialog-header">
+	            <h3 style="padding-top: .18rem;">快递单号</h3>
+	        </div>
+	        <div class="am-dialog-body" style="padding: .16rem .1rem 0;">
+				<input type="hidden" class="data-orderId" value="" />
+	            <p class="am-dialog-brief saosao-desc">1234567876543</p>
+	        </div>
+	        <div class="am-dialog-footer" style="margin-top: .18rem;">
+	            <button type="button" class="am-dialog-button" id="btn-saosao-cancel" style="font-size:.17rem;">取消</button>
+	            <button type="button" class="am-dialog-button" id="btn-saosao-submit" style="font-size:.17rem;">确定</button>
+	        </div>
+	    </div>
+	</div>
+
+
+
+    <div class="am-dialog-body" style="background-color: #fff;border-top: .005rem solid #dddddd;padding-top:.07rem">
+<div class="am-list" style="padding:.0rem;">
+  <div class="am-list-body" aria-labelledby="list-header-1">
+    <div class="am-list-item server-type-show-info" style="padding: .055rem .09rem .0rem;background-size:0;min-height: .21rem;">
+      <p class="am-list-content">服务类型：</p>
+      <p class="am-list-extra server-type-show-info-data" style="color: #000;white-space:nowrap">顺丰次日早上达达</p>
+    </div>
+    <div class="am-list-item" style="padding: .0rem .09rem .0rem;background:#fff;background-size:0;min-height: .21rem;">
+      <div class="am-list-content">物品重量：</div>
+      <div class="am-list-extra" style="color: #000;"><span class="data-weight-sys"></span><span style="padding-left:.055rem;">公斤</span></div>
+    </div>
+    <div class="am-list-item" style="padding: .0rem .09rem .0rem;background:#fff;background-size:0;min-height: .21rem;">
+      <div class="am-list-content">总金额：</div>
+      <div class="am-list-extra" style="color: #000;"><span class="data-pay-sys"></span><span style="padding-left:.055rem;">元</span></div>
+    </div>
+  </div>
+  <div class="am-list-footer pay-sys-desc" style="background:#fff;color:red;padding: .125rem .15rem .0rem;text-align:center;">下单即享8折优惠，已为您减免5.00元</div>
+</div>
+<p style="text-align:center;background:#fff;font-size:.17rem;padding-top:.11rem;">应付金额(元)</p>
+<p style="text-align:center;background:#fff;color:#ff5b05;font-size:.3rem;margin-top:-.01rem;padding-left: .015rem;" class="data-pay-show">23.00</p>
+</div>
+
+
+
+    <p>这个图片没有</p>
+    <img  src="./img/SY_dingdan_icon.png" alt="" style="height:50px;width:100%">
+
+    <div class="am-dialog-mask show dialog-warning" style="display:none"></div>
+<div class="am-dialog simage show dialog-warning" style="display:none">
+    <div class="am-dialog-wrap" style="background-color:#fff;">
+        <div class="am-dialog-img">
+            <img src="http://kuaidi-dev.oss-cn-hangzhou.aliyuncs.com/mobile/cancelOrder.png">
+        </div>
+        <div class="am-dialog-header">
+            <div style="padding-top: .08rem;text-align: center;font-size:.16rem">警告</div>
+        </div>
+        <div class="am-dialog-body" style="padding: .095rem .1rem 0;">
+            <p class="am-dialog-brief" style="font-size:.15rem;color:#888;line-height: .2rem;width: 87%;margin: 0 auto;"></p>
+        </div>
+        <div class="am-dialog-footer" style="margin-top: .15rem;border-top: .01rem solid #ddd;">
+            <button type="button" class="am-dialog-button" id="btn-warning-submit" style="font-weight: bold;font-size:.17rem;height: .45rem;
+  line-height: .45rem;">确定</button>
+        </div>
+    </div>
+</div>
+
+   <div class="box-border" style="height:100px;width:100px;">
+        边框测试
+   </div>
+
+  <br/>
+  <br/>
+
+   <input type="checkbox" />
+   // 弹窗
+   <div class="myPop olay ios-select-widget-box on-level-box" style="padding-top:0;display:none">
+     <div style="position:fixed;z-index:1000;width:100%;height:auto;bottom:0;left:0;;visibility:visible;background:white;">
+       <header style="height: .42rem; line-height: .42rem" class="iosselect-header">
+          <a style="height: .42rem; line-height: .42rem;font-size:.16rem;color:#108ee9;" href="javascript:void(0)" class="close">取消</a>
+          <a style="height: .42rem; line-height: .42rem;font-size:.16rem;color:#108ee9;" href="javascript:void(0)" class="sure">完成</a>
+        </header>
+        <section class="iosselect-box" style="padding:.15rem;background:white;">
+
+            <div  class=" am-list twoline" style="width:100%;padding:0;">
+               <div class="am-list-item express_address_red" style="background-size:0;  border-radius:.05rem;padding-top:.085rem;padding-bottom:.12rem">
+                   <div class="am-list-thumb">
+                     <!-- A11Y: alt 信息增加对图片内容或者目的描述，如「xxx头像」 -->
+                     <img style="width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+                   </div>
+                     <div class="am-list-content">
+                       <div class="am-list-title am-flexbox twocolumn">
+                         <label class="am-flexbox-item" style="color:#000;font-size:.24rem;line-height:.38rem">次日达</label>
+                         <div class="am-list-right-brief" style="color:#f4333c;font-size:.14rem"><span>23</span><span> 元起</span></div>
+                       </div>
+                       <div class="am-list-brief" style="white-space:normal;font-size:.14rem;line-height:.2rem">最快次日18:00前送达截止寄件：当日19:00</div>
+                     </div>
+               </div>
+           </div>
+           <div  class=" am-list twoline" style="width:100%;padding:0;">
+              <div class="am-list-item express_address_book" style="border-radius:.05rem;padding-top:.085rem;padding-bottom:.12rem">
+                  <div class="am-list-thumb">
+                    <!-- A11Y: alt 信息增加对图片内容或者目的描述，如「xxx头像」 -->
+                    <img style="width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+                  </div>
+                    <div class="am-list-content">
+                      <div class="am-list-title am-flexbox twocolumn">
+                        <label class="am-flexbox-item" style="color:#000;font-size:.24rem;line-height:.38rem">隔日达</label>
+                        <div class="am-list-right-brief" style="color:#f4333c;font-size:.14rem"><span>18</span><span> 元起</span></div>
+                      </div>
+                      <div class="am-list-brief" style="white-space:normal;font-size:.14rem;line-height:.2rem">最快次日18:00前送达截止寄件：当日19:00空运隔日发货</div>
+                    </div>
+              </div>
+          </div>
+        </section>
+     </div>
+   </div>
+
+
+    <div class="am-flexbox" style="align-items:center;height:.38rem;font-size:.14rem;padding:0 .15rem">
+		 <p class="am-flexbox-item">
+			  <span>当前城市:</span>
+			  <span style="color:#108ee9;margin-left:.05rem">北京</span>
+        <img style="width:.1rem;height:.06rem;position:relative;top:-.02rem;" src="./img/SY_CA_icon.png">
+		 </p>
+    	<p class="am-flexbox-item" style="color:#108ee9">
+           帮助中心
+    	</p>
+
+
+	 </div>
+   <div class="am-list sicon" style="padding:0;height:.64rem">
+  <a class="am-list-item" style="padding-bottom:.12rem">
+    <div class="am-list-thumb" style="margin-right:.17rem;">
+      <img style="width:.4rem;height:.4rem" src="./img/SY_dingdan_icon.png" alt="图片描述" />
+    </div>
+    <div class="am-list-content" style="font-size:.17rem;color:#000">我的订单</div>
+    <div class="am-list-arrow" aria-hidden="true">
+      <span class="am-icon arrow horizontal"></span>
+    </div>
+  </a>
+</div>
+
+<div style="padding:.15rem" class="am-button-wrap">
+  <a style="color:#fff;font-size:.18rem;height:.41rem;line-height:.41rem;" class="am-button" role="button">完成</a>
+</div>
+
+<div style="padding: 0 .15rem" class="am-button-group" role="group" aria-label="操作按钮组">
+  <button style="height:.41rem;line-height:.41rem;font-size:.18rem" type="button" class="am-button white">查看订单详情</button>
+</div>
+
+<div class="am-list sicon kd-padding" style="padding-top: 0rem;">
+		<div class="am-list-body">
+		  <div class="am-list-item" style="padding-top:.06rem;padding-bottom:.06rem;min-height: .34rem">
+			  <div class="am-list-thumb" style="margin-right:.07rem;">
+				<img src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/orderstatus_icon.png" style="width:.24rem;height:.24rem;" />
+			  </div>
+			  <div style="color:#ff5b05;overflow:visible;" class="am-list-content order-wait-desc">已安排快递员，等待取件</div>
+         <div class="am-list-extra" style="overflow:visible">
+           <a href="#" style="color:#108ee0;font-size:.15rem;" class="am-button tiny" role="button">取消</a>
+         </div>
+		  </div>
+		</div>
+</div>
+
+<div class="newDate olay ios-select-widget-box on-level-box" style="padding-top:0;">
+  <div style="position:fixed;z-index:1000;width:100%;height:auto;bottom:0;left:0;;visibility:visible;background:white;">
+    <header style="height: .42rem; line-height: .42rem" class="iosselect-header">
+       <a style="height: .42rem; line-height: .42rem;font-size:.16rem;color:#108ee9;" href="javascript:void(0)" class="close">取消</a>
+       <a style="height: .42rem; line-height: .42rem;font-size:.16rem;color:#108ee9;" href="javascript:void(0)" class="sure">完成</a>
+     </header>
+     <section class="iosselect-box" style="padding:.15rem;background:white;">
+           <div class="am-flexbox" style="display:flex;float:none;margin-bottom:20px">
+                <div class="dataItem">
+                  <img style="position:relative;top:5px;width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/select.png" alt="图片描述" />
+                  <span>今天</span>
+                  <p>2017-09-19</p>
+                </div>
+                <div class="dataItem clickDisabled">
+                  <img style="display:none;position:relative;top:5px;width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+                  <span style="display:inline-block;height:.21rem">明天约满</span>
+                  <p>2017-09-20</p>
+                </div>
+                <div class="dataItem">
+                  <img style="position:relative;top:5px;width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+                  <span>后天</span>
+                  <p>2017-09-21</p>
+                </div>
+          </div>
+          <div class="times" style="">
+
+              <button style="font-size:14px;margin-right:20px;margin-bottom:20px;width:90px;height:30px;line-height:1" class="am-button white">&nbsp;&nbsp;9-11点约满</button>
+              <button  style="font-size:14px;margin-right:20px;margin-bottom:20px;width:90px;height:30px;line-height:1" class="am-button white">11-13点</button>
+              <button  style="font-size:14px;width:90px;height:30px;line-height:1" class="am-button white">13-15点</button>
+              <button  style="font-size:14px;margin-right:20px;width:90px;height:30px;line-height:1"  class="am-button white">15-17点</button>
+              <button style="font-size:14px;width:90px;height:30px;line-height:1" class="am-button white" >17-19点</button>
+            </div>
+         <!-- <div  class=" am-list twoline" style="width:100%;padding:0;">
+            <div class="am-list-item express_address_red" style="background-size:0;  border-radius:.05rem;padding-top:.085rem;padding-bottom:.12rem">
+                <div class="am-list-thumb">
+                   A11Y: alt 信息增加对图片内容或者目的描述，如「xxx头像」
+                 <img style="width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+                </div>
+                  <div class="am-list-content">
+                    <div class="am-list-title am-flexbox twocolumn">
+                      <label class="am-flexbox-item" style="color:#000;font-size:.24rem;line-height:.38rem">次日达</label>
+                      <div class="am-list-right-brief" style="color:#f4333c;font-size:.14rem"><span>23</span><span> 元起</span></div>
+                    </div>
+                    <div class="am-list-brief" style="white-space:normal;font-size:.14rem;line-height:.2rem">最快次日18:00前送达截止寄件：当日19:00</div>
+                  </div>
+            </div>
+        </div> -->
+        <!-- <div  class=" am-list twoline" style="width:100%;padding:0;">
+           <div class="am-list-item express_address_book" style="border-radius:.05rem;padding-top:.085rem;padding-bottom:.12rem">
+               <div class="am-list-thumb">
+                A11Y: alt 信息增加对图片内容或者目的描述，如「xxx头像」 -->
+                 <!-- <img style="width:.21rem;height:.21rem" src="https://expressprod.oss-cn-hangzhou.aliyuncs.com/mobile/img/noselect.png" alt="图片描述" />
+               </div>
+                 <div class="am-list-content">
+                   <div class="am-list-title am-flexbox twocolumn">
+                     <label class="am-flexbox-item" style="color:#000;font-size:.24rem;line-height:.38rem">隔日达</label>
+                     <div class="am-list-right-brief" style="color:#f4333c;font-size:.14rem"><span>18</span><span> 元起</span></div>
+                   </div>
+                   <div class="am-list-brief" style="white-space:normal;font-size:.14rem;line-height:.2rem">最快次日18:00前送达截止寄件：当日19:00空运隔日发货</div>
+                 </div>
+           </div>
+       </div> -->
+     </section>
+  </div>
+</div>
+
+
+
+
+<button class="am-button tiny">辅助按钮</button>
+<button class="am-button disabled tiny">辅助按钮</button>
+
+<a href="#" class="am-button tiny" role="button">辅助按钮</a>
+<a href="#" class="am-button disabled tiny" role="button">辅助按钮</a>
+
+
+    <button id="btn"> 获取时间 两级联动 </button>
+    <button id="one">获取类型 一级联动</button>
+    <button id="pop">show pop</button>
+    <button id="newDate">新时间</button>
+
+          <input readonly="true" name ="date_id" id="dateId" value="">
+      <input type="hidden" name ="date_id" id="dateId" value="">
+      <input type="hidden" name="time_id" id="timeId" value="">
+
+  <input type="hidden" name="type_id" id="typeId" value="">
+
+  <script src="https://a.alipayobjects.com/amui/zepto/1.1.3/zepto.js"></script>
+  <script src="https://a.alipayobjects.com/g/antui/antui/10.0.0/antui.js"></script>
+  <script>
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      alert('是否是Android：'+isAndroid);
+      alert('是否是iOS：'+isiOS);
+  </script>
+
+
+  <script>
+var time=  {
+    "TDY": [
+        {
+            "time": "08:30-10:30",
+            "status": "3"
+        },
+        {
+            "time": "10:30-12:30",
+            "status": "3"
+        },
+        {
+            "time": "12:30-14:30",
+            "status": "1"
+        },
+        {
+            "time": "14:30-16:30",
+            "status": "2"
+        },
+        {
+            "time": "16:30-18:30",
+            "status": "1"
+        }
+    ],
+    "TOM": [
+        {
+            "time": "08:30-10:30",
+            "status": "1"
+        },
+        {
+            "time": "10:30-12:30",
+            "status": "1"
+        },
+        {
+            "time": "12:30-14:30",
+            "status": "1"
+        },
+        {
+            "time": "14:30-16:30",
+            "status": "1"
+        },
+        {
+            "time": "16:30-18:30",
+            "status": "1"
+        }
+    ],
+    "AFT": [
+        {
+            "time": "08:30-10:30",
+            "status": "1"
+        },
+        {
+            "time": "10:30-12:30",
+            "status": "1"
+        },
+        {
+            "time": "12:30-14:30",
+            "status": "1"
+        },
+        {
+            "time": "14:30-16:30",
+            "status": "1"
+        },
+        {
+            "time": "16:30-18:30",
+            "status": "1"
+        }
+    ]
+}
+
+$('.times button').each(function(index){
+    console.log(time['TDY'][index]);
+      $(this).html(time['TDY'][index].time);
+      if(time['TDY'][index].status === "1") {
+        $(this).removeAttr("disabled");
+      }else {
+        $(this).attr('disabled','disabled');
+      }
+})
+
+
+  </script>
+    <script src="./iosSelect.js"></script>
+    <script src="./common.js"></script>
+  </body>
+</html>
