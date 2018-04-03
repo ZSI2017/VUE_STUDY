@@ -372,6 +372,7 @@ export function findRef (node) {
 /**
  * Get outerHTML of elements, taking care
  * of SVG elements in IE as well.
+ * outerHTML 返回时，内容包含描述元素及其后代的序列化HTML片段
  *
  * @param {Element} el
  * @return {String}
