@@ -1,5 +1,6 @@
 import { def } from '../util/index'
 
+// 创建一个没有 length 属性的 数组对象。
 const arrayProto = Array.prototype
 export const arrayMethods = Object.create(arrayProto)
 

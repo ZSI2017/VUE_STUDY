@@ -8,6 +8,8 @@ import {
   hasOwn
 } from '../util/index'
 
+// getOwnPropertyNames() 方法返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括Symbol值作为名称的属性）组成的数组
+// 不包括原型链上的属性，如果你只要获取到可枚举属性，查看Object.keys或用for...in循环（还会获取到原型链上的可枚举属性
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 
 /**
@@ -37,6 +39,7 @@ export function withoutConversion (fn) {
  * @constructor
  */
 
+// hasProto  can we use __proto__?
 export function Observer (value) {
   this.value = value
   this.dep = new Dep()
@@ -168,6 +171,8 @@ export function observe (value, vm) {
     hasOwn(value, '__ob__') &&
     value.__ob__ instanceof Observer
   ) {
+    // 如果 observer 已经存在的话，就直接获取。
+    // Object.isExtensible 判断一个对象是否是可扩展（是否可以在它上面添加新的属性。）
     ob = value.__ob__
   } else if (
     shouldConvert &&
