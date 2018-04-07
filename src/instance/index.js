@@ -36,6 +36,7 @@ export default class Component {
   }
 
   _update (vtree) {
+    // 初始化 或者 更新 视图
     if (!this._tree) {
       // 初始化 渲染时, 还没有 虚拟DOM 树。
       patch(this._el, vtree)
