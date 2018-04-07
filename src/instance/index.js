@@ -17,8 +17,13 @@ export default class Component {
         this[key] = options.methods[key].bind(this)
       })
     }
+    // 对data对象中所有属性都设置 setter/getter 监听器，
+    // 或者对里面出现的数组，改写其原型方法，手动触发监听。
+    //
     this._ob = observe(options.data)
+    // 初始化一个 watchers 数组
     this._watchers = []
+    //
     this._watcher = new Watcher(this, render, this._update)
     this._update(this._watcher.value)
   }

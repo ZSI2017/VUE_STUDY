@@ -28,10 +28,11 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
 
 export default function createPatchFunction (modules, api) {
   var i, j, cbs = {}
-
+  // 设置对 dom 操作的API
   if (isUndef(api)) api = dom
 
   for (i = 0; i < hooks.length; ++i) {
+    // 定义不同时期的钩子函数。
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
       if (modules[j][hooks[i]] !== undefined) cbs[hooks[i]].push(modules[j][hooks[i]])
@@ -226,15 +227,20 @@ export default function createPatchFunction (modules, api) {
     }
   }
 
+  // patch(this._le,vtree)
+  // patch(this._tree,vtree)
   return function patch (oldVnode, vnode) {
     var i, elm, parent
     var insertedVnodeQueue = []
+    // 首先触发 pre 上的回调。
     for (i = 0; i < cbs.pre.length; ++i) cbs.pre[i]()
 
+
     if (isUndef(oldVnode.sel)) {
+      // 对应的实例化一个节点对象。
       oldVnode = emptyNodeAt(oldVnode)
     }
-
+    // 通过节点名 和 dom 上对应的 keys 值，来判断是否是相同的节点。
     if (sameVnode(oldVnode, vnode)) {
       patchVnode(oldVnode, vnode, insertedVnodeQueue)
     } else {
