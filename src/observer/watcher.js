@@ -86,6 +86,7 @@ Watcher.prototype.get = function () {
   var scope = this.scope || this.vm
   var value
   try {
+  // 如果传入的是 解析指令后的 虚拟dom ,则 触发里面 __h__ 方法。
     value = this.getter.call(scope, scope)
   } catch (e) {
     if (
