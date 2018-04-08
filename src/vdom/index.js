@@ -6,6 +6,7 @@ import props from './modules/props'
 import attrs from './modules/attrs'
 import events from './modules/events'
 
+// 传入一个对象数组作为参数。
 const patch = createPatchFunction([
   _class, // makes it easy to toggle classes
   props,

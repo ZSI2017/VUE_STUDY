@@ -160,12 +160,13 @@ Watcher.prototype.beforeGet = function () {
 
 /**
  * Add a dependency to this directive.
- *
+ *  添加一个新的依赖，
  * @param {Dep} dep
  */
 
 Watcher.prototype.addDep = function (dep) {
   var id = dep.id
+  // 为 依赖添加一个Id ，
   if (!this.newDepIds[id]) {
     this.newDepIds[id] = true
     this.newDeps.push(dep)
@@ -185,7 +186,9 @@ Watcher.prototype.afterGet = function () {
   var i = this.deps.length
   while (i--) {
     var dep = this.deps[i]
+    // 通过 this.newDepIds   删除对应 的新的依赖。
     if (!this.newDepIds[dep.id]) {
+    //  
       dep.removeSub(this)
     }
   }

@@ -3,6 +3,8 @@ import * as dom from './dom'
 import { isPrimitive } from '../util/index'
 
 const emptyNode = VNode('', {}, [], undefined, undefined)
+
+// 定义 一些基本的 钩子函数
 const hooks = ['create', 'update', 'remove', 'destroy', 'pre', 'post']
 
 function isUndef (s) {
@@ -30,11 +32,12 @@ export default function createPatchFunction (modules, api) {
   var i, j, cbs = {}
   // 设置对 dom 操作的API
   if (isUndef(api)) api = dom
-
+  //
   for (i = 0; i < hooks.length; ++i) {
     // 定义不同时期的钩子函数。
     cbs[hooks[i]] = []
     for (j = 0; j < modules.length; ++j) {
+      // cbs 对象中， 保存着不同时期 的 回调数组。
       if (modules[j][hooks[i]] !== undefined) cbs[hooks[i]].push(modules[j][hooks[i]])
     }
   }
@@ -195,10 +198,15 @@ export default function createPatchFunction (modules, api) {
       return
     }
     var elm = vnode.elm = oldVnode.elm, oldCh = oldVnode.children, ch = vnode.children
+    // 进行对象比较。如果相等就直接返回
     if (oldVnode === vnode) return
+
     if (!sameVnode(oldVnode, vnode)) {
+      // 获取到真实的 父节点的 dom 节点
       var parentElm = api.parentNode(oldVnode.elm)
+      //  insertedVnodeQueue 空数组 
       elm = createElm(vnode, insertedVnodeQueue)
+
       api.insertBefore(parentElm, elm, oldVnode.elm)
       removeVnodes(parentElm, [oldVnode], 0, 0)
       return
@@ -232,15 +240,16 @@ export default function createPatchFunction (modules, api) {
   return function patch (oldVnode, vnode) {
     var i, elm, parent
     var insertedVnodeQueue = []
-    // 首先触发 pre 上的回调。
+    // 首先触发 pre 钩子 上的回调。
     for (i = 0; i < cbs.pre.length; ++i) cbs.pre[i]()
 
 
     if (isUndef(oldVnode.sel)) {
+      // 第一次初始化的时候，不是 vNode 对象。
       // 对应的实例化一个节点对象。
       oldVnode = emptyNodeAt(oldVnode)
     }
-    // 通过节点名 和 dom 上对应的 keys 值，来判断是否是相同的节点。
+    // 通过节点名 和 dom 上对应的 keys 值，来判断是否是为同级的节点。
     if (sameVnode(oldVnode, vnode)) {
       patchVnode(oldVnode, vnode, insertedVnodeQueue)
     } else {
