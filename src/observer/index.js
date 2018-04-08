@@ -62,6 +62,7 @@ export function Observer (value) {
  * getter/setters. This method should only be called when
  * value type is Object.
  *
+ *  如果传入的参数是对象，则遍历对象上的每个属性，把他们转换成 getter/setter 构造器的形式。方便监听到每个属性的改变。
  * @param {Object} obj
  */
 
@@ -163,6 +164,7 @@ function copyAugment (target, src, keys) {
  */
 
 export function observe (value, vm) {
+  // 在 options.data 对象上 添加 监听器。
   if (!value || typeof value !== 'object') {
     return
   }
@@ -197,6 +199,7 @@ export function observe (value, vm) {
  */
 
 export function defineReactive (obj, key, val) {
+  // 转换为活性
   var dep = new Dep()
 
   var property = Object.getOwnPropertyDescriptor(obj, key)
