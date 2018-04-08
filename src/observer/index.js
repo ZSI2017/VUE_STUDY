@@ -126,7 +126,7 @@ Observer.prototype.removeVm = function (vm) {
 /**
  * Augment an target Object or Array by intercepting
  * the prototype chain using __proto__
- *
+ * 改变 对应的 隐式原型的指向，改变相应的原型链，主要为Array加上自定义的push.shift 等方法。
  * @param {Object|Array} target
  * @param {Object} src
  */
@@ -199,19 +199,37 @@ export function observe (value, vm) {
  */
 
 export function defineReactive (obj, key, val) {
-  // 转换为活性
-  var dep = new Dep()
 
+  // 转换为活性
+  // 重新定义当前`this.value`对象上的所有属性以及属性值。
+  // 创建一个观察者数组，
+  var dep = new Dep()
+  /**
+   *  ES5 Object.getOwnPropertyDescriptor(),返回指定对象上一个自有属性对应的属性描述符。
+   *  属性描述符是一个记录，组成：
+   *   如果是 访问器属性，则 返回的对象的属性有
+   *     configurable,
+   *     enumerable（对象属性可以被枚举时，为true）,
+   *     get（获取该属性的访问器函数） 和
+   *     set（获取该属性的设置 器函数）
+   *   如果是数据属性，则 有
+   *     configurable(当且仅当对象的属性描述可以被改变或者属性可被删除时，为true),
+   *      enumerable,
+   *      writable(当且仅仅当属性的值可以改变时为true),
+   *      value(该属性的值)
+   */
   var property = Object.getOwnPropertyDescriptor(obj, key)
+   //当且仅当对象的属性描述可以被改变或者属性可被删除时
   if (property && property.configurable === false) {
     return
   }
-
+  // 提供提前设定好的 getter(访问器函数)  和 setter (设置器函数）；
   // cater for pre-defined getter/setters
   var getter = property && property.get
   var setter = property && property.set
 
   var childOb = observe(val)
+  // 重新定义对象的属性类型
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
@@ -234,14 +252,18 @@ export function defineReactive (obj, key, val) {
     set: function reactiveSetter (newVal) {
       var value = getter ? getter.call(obj) : val
       if (newVal === value) {
+        // value 值没发生改变，则直接返回
         return
       }
+      // 通过 setter 设置器或者直接赋值
       if (setter) {
         setter.call(obj, newVal)
       } else {
         val = newVal
       }
+      // 为 newValue 上的所有属性都加上监听器
       childOb = observe(newVal)
+      // 通知观察者队列中所有项
       dep.notify()
     }
   })

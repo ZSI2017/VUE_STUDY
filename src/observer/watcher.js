@@ -12,23 +12,31 @@ import {
 let uid = 0
 
 /**
+ *  用来解析表达式，收集依赖，在表达式的值改变时，触发回调函数。
+ *  主要作用于 $watch 接口 和指令。
  * A watcher parses an expression, collects dependencies,
  * and fires callback when the expression value changes.
  * This is used for both the $watch() api and directives.
  *
- * @param {Vue} vm
- * @param {String|Function} expOrFn
+ * @param {Vue} vm   // vm 指代 一个Vue 实例。
+ * @param {String|Function} expOrFn // 对应一个 字符串，或者是一个计算属性的函数
  * @param {Function} cb
  * @param {Object} options
  *                 - {Array} filters
  *                 - {Boolean} twoWay
- *                 - {Boolean} deep
+ *                 - {Boolean} deep   // watch 的对象 内部属性发生变化时，是否也要触发cb
  *                 - {Boolean} user
  *                 - {Boolean} sync
  *                 - {Boolean} lazy
  *                 - {Function} [preProcess]
  *                 - {Function} [postProcess]
  * @constructor
+ */
+
+/**
+ *  vm.$watch('a.b.c', function (newVal, oldVal) {
+ *        // do something
+ *   })
  */
 
 export default function Watcher (vm, expOrFn, cb, options) {
@@ -38,7 +46,9 @@ export default function Watcher (vm, expOrFn, cb, options) {
   }
   var isFn = typeof expOrFn === 'function'
   this.vm = vm
+  // 保存 watchers 实例到 vm._watchers 数组里面
   vm._watchers.push(this)
+
   this.expression = expOrFn
   this.cb = cb
   this.id = ++uid // uid for batching
@@ -46,14 +56,17 @@ export default function Watcher (vm, expOrFn, cb, options) {
   this.dirty = this.lazy // for lazy watchers
   this.deps = []
   this.newDeps = []
+  // 创造一个没有原型方法的空对象。
   this.depIds = Object.create(null)
   this.newDepIds = null
   this.prevError = null // for async error stacks
   // parse expression for getter/setter
   if (isFn) {
+    // 如果是一个计算属性的函数，则通过 getter 取值器，获取。
     this.getter = expOrFn
     this.setter = undefined
   } else {
+    // 目前轻量级的vue
     warn('vue-lite only supports watching functions.')
   }
   this.value = this.lazy
@@ -73,6 +86,7 @@ Watcher.prototype.get = function () {
   var scope = this.scope || this.vm
   var value
   try {
+  // 如果传入的是 解析指令后的 虚拟dom ,则 触发里面 __h__ 方法。
     value = this.getter.call(scope, scope)
   } catch (e) {
     if (
@@ -88,6 +102,7 @@ Watcher.prototype.get = function () {
   }
   // "touch" every property so they are all tracked as
   // dependencies for deep watching
+  // deep 配置项，表明捕获对象内的所有内部属性。
   if (this.deep) {
     traverse(value)
   }
@@ -133,6 +148,7 @@ Watcher.prototype.set = function (value) {
 }
 
 /**
+ * 为依赖收集做准备。
  * Prepare for dependency collection.
  */
 
@@ -161,6 +177,7 @@ Watcher.prototype.addDep = function (dep) {
 
 /**
  * Clean up for dependency collection.
+ *  清除所有收集到的依赖。
  */
 
 Watcher.prototype.afterGet = function () {
@@ -303,6 +320,7 @@ Watcher.prototype.teardown = function () {
  * getters, so that every nested property inside the object
  * is collected as a "deep" dependency.
  *
+ * 递归地 遍历一个对象，触发所有getters 取值器的修改，为了让所有内部嵌套属性 都能被作为依赖收集到。
  * @param {*} val
  */
 
