@@ -10,6 +10,7 @@ export default class Component {
     this._data = options.data
     const el = this._el = document.querySelector(options.el)
     // 真实dom转化为ast , 解析指令 ，返回 函数中 包裹 __h__的虚拟dom.
+
     const render = compile(getOuterHTML(el))
     this._el.innerHTML = ''
 
@@ -58,10 +59,13 @@ export default class Component {
       : dynamic
   }
 
+// 扁平化方法，减少数组的嵌套层级。
   __flatten__ (arr) {
     var res = []
     for (var i = 0, l = arr.length; i < l; i++) {
       var e = arr[i]
+      // 如果里面一层还是数组，就需要遍历里面数组，
+      // 减少数组的嵌套层级。
       if (Array.isArray(e)) {
         for (var j = 0, k = e.length; j < k; j++) {
           if (e[j]) {

@@ -105,6 +105,7 @@ function genChildren (el) {
     return 'undefined'
   }
  // genNode 递归遍历里面的子对象，即子节点。
+ // __flatten__() 扁平化方法，减少数组的嵌套层级。
   return '__flatten__([' + el.children.map(genNode).join(',') + '])'
 }
 

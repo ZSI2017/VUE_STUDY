@@ -9,7 +9,8 @@ function addNS(data, children) {
     }
   }
 }
-
+//`__h__('${ el.tag }', ${ genData(el, key) }, ${ genChildren(el) })`
+// 编译指令后，转换为  vNode 类型的对象。
 export default function h (tag, b, c) {
   var data = {}, children, text, i
   if (arguments.length === 3) {
@@ -29,5 +30,6 @@ export default function h (tag, b, c) {
   if (tag === 'svg') {
     addNS(data, children)
   }
+  // { sel, data, children, text, elm, key }
   return VNode(tag, data, children, text, undefined)
 }

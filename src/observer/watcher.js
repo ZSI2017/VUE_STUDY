@@ -87,6 +87,8 @@ Watcher.prototype.get = function () {
   var value
   try {
   // 如果传入的是 解析指令后的 虚拟dom ,则 触发里面 __h__ 方法。
+  // __h__,将编译了指令后的 虚拟dom 对象，转化为 vNode 类型的对象。
+ // { sel, data, children, text, elm, key }
     value = this.getter.call(scope, scope)
   } catch (e) {
     if (
@@ -188,7 +190,7 @@ Watcher.prototype.afterGet = function () {
     var dep = this.deps[i]
     // 通过 this.newDepIds   删除对应 的新的依赖。
     if (!this.newDepIds[dep.id]) {
-    //  
+    //
       dep.removeSub(this)
     }
   }

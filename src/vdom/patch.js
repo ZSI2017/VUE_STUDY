@@ -15,6 +15,12 @@ function isDef (s) {
   return s !== undefined
 }
 
+/**
+ * 判断 vnode 对象上的 key  和 tagName（sel);
+ * @param  {[type]} vnode1 [description]
+ * @param  {[type]} vnode2 [description]
+ * @return {[type]}        [description]
+ */
 function sameVnode (vnode1, vnode2) {
   return vnode1.key === vnode2.key && vnode1.sel === vnode2.sel
 }
@@ -188,46 +194,70 @@ export default function createPatchFunction (modules, api) {
 
   function patchVnode (oldVnode, vnode, insertedVnodeQueue) {
     var i, hook
+    // 初始化过程中 vnode.data.hook 为 “undefined”
     if (isDef(i = vnode.data) && isDef(hook = i.hook) && isDef(i = hook.prepatch)) {
       i(oldVnode, vnode)
     }
+    //初始化 ，emptyNodeAt oldVnode.data是一个 {} 空对象。所以 oldVnode.data.vnode 为 “undefined”
     if (isDef(i = oldVnode.data) && isDef(i = i.vnode)) oldVnode = i
+
+    // 。。。。 ????
     if (isDef(i = vnode.data) && isDef(i = i.vnode)) {
       patchVnode(oldVnode, i, insertedVnodeQueue)
       vnode.elm = i.elm
       return
     }
+    // 将 oldVnode 的 真实 dom 引用，
+    // 覆盖 新 vnode的真实dom 引用。
     var elm = vnode.elm = oldVnode.elm, oldCh = oldVnode.children, ch = vnode.children
     // 进行对象比较。如果相等就直接返回
     if (oldVnode === vnode) return
 
+    //  比较 新旧 节点都不同，则 插入新节点，删除旧节点。
     if (!sameVnode(oldVnode, vnode)) {
       // 获取到真实的 父节点的 dom 节点
       var parentElm = api.parentNode(oldVnode.elm)
-      //  insertedVnodeQueue 空数组 
+      //  insertedVnodeQueue 空数组
       elm = createElm(vnode, insertedVnodeQueue)
 
       api.insertBefore(parentElm, elm, oldVnode.elm)
       removeVnodes(parentElm, [oldVnode], 0, 0)
       return
     }
+
+     // 新 vnode 对象中，存在 data属性
     if (isDef(vnode.data)) {
-      for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
-      i = vnode.data.hook
-      if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode)
+    // 然后就把他们放入到update 更新 钩子函数里面。
+    // 分别更新节点里面 attrs,class events,props styles 等数据。
+     for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
+
+        i = vnode.data.hook
+
+        if (isDef(i) && isDef(i = i.update)) i(oldVnode, vnode)
     }
+
+    // c = ${ genChildren(el) }
+    // if (isPrimitive(c)) { text = c }
+    //  如果 genChildren(el) 返回的值不是 "string" 或者 “number” 等基本类型。
+    //  则 vnode.text  就为 "undefined"
     if (isUndef(vnode.text)) {
+        // 新旧节点 都存在 子节点，则手动更新 子节点。
       if (isDef(oldCh) && isDef(ch)) {
         if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue)
       } else if (isDef(ch)) {
+        // 新节点没有 文本属性 ，旧节点存在文本属性，则把文本设置为空。
         if (isDef(oldVnode.text)) api.setTextContent(elm, '')
+
         addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
       } else if (isDef(oldCh)) {
+        // 旧节点存在子节点，新节点不存在子节点，则 删除子节点。
         removeVnodes(elm, oldCh, 0, oldCh.length - 1)
       } else if (isDef(oldVnode.text)) {
+        /// 同样只有 旧节点存在 文本内容，就置空文本内容。
         api.setTextContent(elm, '')
       }
     } else if (oldVnode.text !== vnode.text) {
+      // 更新 节点里面 的 文本内容。
       api.setTextContent(elm, vnode.text)
     }
     if (isDef(hook) && isDef(i = hook.postpatch)) {
@@ -247,19 +277,31 @@ export default function createPatchFunction (modules, api) {
     if (isUndef(oldVnode.sel)) {
       // 第一次初始化的时候，不是 vNode 对象。
       // 对应的实例化一个节点对象。
+      // VNode(api.tagName(elm).toLowerCase(), {}, [], undefined, elm)
+      // 初始化时 elm === oldVnode === this._el === document.querySelector(options.el),
+      // 也就是获取到的真实dom 引用。
       oldVnode = emptyNodeAt(oldVnode)
     }
-    // 通过节点名 和 dom 上对应的 keys 值，来判断是否是为同级的节点。
+    // 通过节点名（sel） 和 dom 上对应的 keys 值（key），来判断 父节点是否没有发生改变。
     if (sameVnode(oldVnode, vnode)) {
+      // 父节点没有发生改变，
+      //
       patchVnode(oldVnode, vnode, insertedVnodeQueue)
     } else {
+      // 父节点发生了改变。
+      // 获取到老 vNode 对象的 真实dom 引用。
       elm = oldVnode.elm
+      // node.parentElement
+      // 返回当前旧元素的父元素节点。
       parent = api.parentNode(elm)
 
       createElm(vnode, insertedVnodeQueue)
 
+      // 在拿到了当前需要更新的节点的父元素的真实dom 引用后，
       if (parent !== null) {
+        // 在旧元素后面 插入 改变后的新元素
         api.insertBefore(parent, vnode.elm, api.nextSibling(elm))
+        // 然后 再移除旧元素，从而实现更新操作。
         removeVnodes(parent, [oldVnode], 0, 0)
       }
     }
@@ -267,6 +309,7 @@ export default function createPatchFunction (modules, api) {
     for (i = 0; i < insertedVnodeQueue.length; ++i) {
       insertedVnodeQueue[i].data.hook.insert(insertedVnodeQueue[i])
     }
+    // 整个 新旧node 节点更新完成后，调用 post 钩子函数。
     for (i = 0; i < cbs.post.length; ++i) cbs.post[i]()
     return vnode
   }

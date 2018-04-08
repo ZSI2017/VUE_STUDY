@@ -1,4 +1,5 @@
 export function isPrimitive (s) {
+  // 判断是否为原始数据类型，
   return typeof s === 'string' || typeof s === 'number'
 }
 
