@@ -37,7 +37,13 @@ export default class Component {
   }
 
   _update (vtree) {
-    // 初始化 或者 更新 视图
+    //1. 初始化 真实的DOM 树
+    // DOM 树 ---》  AST 抽象语法树 ----》编译 指令(v-on/@ v-bind/:  v-if  v-for class props style )，生成 VNode 虚拟DOM ----》 检查到对应的更新————》更新　真实的DOM 树
+    //2. 更新 真实的DOM 树。
+    // VNOde ----》 检查到对应的更新————》　 反应到真实的DOM树上。
+    // 初始化  完成 dom 树的创建
+    //
+    // 更新  Watcher 监听到data 中数据发生任何变化 ，同样触发 patch ，
     if (!this._tree) {
       // 初始化 渲染时, 还没有 虚拟DOM 树。
       patch(this._el, vtree)

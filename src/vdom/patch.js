@@ -2,6 +2,7 @@ import VNode from './vnode'
 import * as dom from './dom'
 import { isPrimitive } from '../util/index'
 
+// 创建一个空的 vNode 对象，作为节点模板。
 const emptyNode = VNode('', {}, [], undefined, undefined)
 
 // 定义 一些基本的 钩子函数
@@ -73,15 +74,23 @@ export default function createPatchFunction (modules, api) {
     var elm, children = vnode.children, tag = vnode.sel
     if (isDef(tag)) {
       elm = vnode.elm = isDef(data) && isDef(i = data.ns)
-        ? api.createElementNS(i, tag)
-        : api.createElement(tag)
+        ? api.createElementNS(i, tag)   //只有使用命名空间的 XML 文档才会使用该方法。 传入规定的命名空间的名称 和 元素节点名称
+        : api.createElement(tag)       // 使用createElement 传入节点名，创造对应节点。
+      // 检查元素的子节点是否为数组，
       if (Array.isArray(children)) {
+        // 如果是数组，则递归创造子节点。
         for (i = 0; i < children.length; ++i) {
           api.appendChild(elm, createElm(children[i], insertedVnodeQueue))
         }
       } else if (isPrimitive(vnode.text)) {
+        // 如果是内容 且仅为文本节点，则直接创造文本节点，插入到当前元素中
         api.appendChild(elm, api.createTextNode(vnode.text))
       }
+      // 利用 开始存放的 钩 子函数， 遍历触发里面所有的 create 回调函数。
+      //  updateStyle  updateProps updateEventListeners updateAttrs
+      //  缺少 { init: updateClass },
+      //  在创建的节点上 添加 style props eventListener  attrs 等等。
+      //  完善新创建的 节点。 同样真实的节点引用保存在 vnode.elm 中。
       for (i = 0; i < cbs.create.length; ++i) cbs.create[i](emptyNode, vnode)
       i = vnode.data.hook // Reuse variable
       if (isDef(i)) {
@@ -92,6 +101,7 @@ export default function createPatchFunction (modules, api) {
       elm = vnode.elm = api.createTextNode(vnode.text)
     }
     if (isDef(thunk)) thunk.elm = vnode.elm
+    // 最后返回 vnode 对象 对应的真实节点的引用。
     return vnode.elm
   }
 
@@ -218,9 +228,13 @@ export default function createPatchFunction (modules, api) {
       // 获取到真实的 父节点的 dom 节点
       var parentElm = api.parentNode(oldVnode.elm)
       //  insertedVnodeQueue 空数组
+      //  通过 createElm 函数，拿到了创建真实的dom 节点后的 引用。
+      //  赋值给 elm
       elm = createElm(vnode, insertedVnodeQueue)
 
+      // 在老节点前 插入新节点，
       api.insertBefore(parentElm, elm, oldVnode.elm)
+      // 然后删除 老节点。整个 真实的dom 树的更新，也同样完成了。
       removeVnodes(parentElm, [oldVnode], 0, 0)
       return
     }
