@@ -50,6 +50,8 @@ export default class Component {
     } else {
       patch(this._tree, vtree)
     }
+    // 缓存就的 vnode 对象，
+    // 便于下次dom 节点发生改变的时候，进行新旧节点的比较。
     this._tree = vtree
   }
 
@@ -86,6 +88,7 @@ export default class Component {
   }
 
   _proxy (key) {
+    // 判断key 值，是否为 vue 内部变量。
     if (!isReserved(key)) {
       // need to store ref to self here
       // because these getter/setters might

@@ -94,7 +94,7 @@ export function isLiteral (exp) {
 
 /**
  * Check if a string starts with $ or _
- *
+ * 检查一个 字符串是否 以 $ 或者 _ 开头，规定 $ ,_ 开头的为vue 内部变量或方法。不会进行属性监听
  * @param {String} str
  * @return {Boolean}
  */
