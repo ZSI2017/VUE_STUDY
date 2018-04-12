@@ -18,7 +18,8 @@ exports._initScope = function () {
 }
 
 /**
- * Initialize the data. 
+ * Initialize the data.
+ *  this._data = options.data || {}    init.js
  */
 
 exports._initData = function () {
@@ -29,7 +30,9 @@ exports._initData = function () {
   var key
   while (i--) {
     key = keys[i]
+    // 判断，非内部数据
     if (!_.isReserved(key)) {
+
       this._proxy(key)
     }
   }
@@ -104,6 +107,7 @@ exports._proxy = function (key) {
  */
 
 exports._unproxy = function (key) {
+  // 利用 delete 删除一个属性。
   delete this[key]
 }
 

@@ -59,14 +59,20 @@ function Observer (value, type) {
   this.value = value
   this.active = true
   this.bindings = []
+  // 在vue 实例上定义 一个 __ob__
+  // 通过 定义 ‘__ob__’
   _.define(value, '__ob__', this)
   if (type === ARRAY) {
     var augment = config.proto && _.hasProto
       ? protoAugment
       : copyAugment
+
     augment(value, arrayMethods, arrayKeys)
     this.observeArray(value)
   } else if (type === OBJECT) {
+    // 如果是对象，则遍历里面的 键值对。
+    // 分别为不同的属性添加 getter/setter 构造器
+    // 同时在 setter 构造器中，
     this.walk(value)
   }
 }
@@ -91,13 +97,17 @@ Observer.create = function (value) {
     value.hasOwnProperty('__ob__') &&
     value.__ob__ instanceof Observer
   ) {
+   // 如果本身存在指向监听器对象的 __ob__ 属性。
+   // 就返回 监听器对象。
     return value.__ob__
   } else if (_.isArray(value)) {
+    // 区分到底是 数组 类型的
     return new Observer(value, ARRAY)
   } else if (
     _.isPlainObject(value) &&
     !value._isVue // avoid Vue instance
   ) {
+    // 还是对象类型。
     return new Observer(value, OBJECT)
   }
 }
@@ -159,8 +169,10 @@ p.observeArray = function (items) {
 
 p.convert = function (key, val) {
   var ob = this
+  // 如果val 是 对象 或者 数组，则为val再创造一个 getter/setter 监听器。
   var childOb = ob.observe(val)
   var binding = new Binding()
+
   if (childOb) {
     childOb.bindings.push(binding)
   }

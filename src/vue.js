@@ -84,6 +84,8 @@ extend(p, require('./instance/compile'))
 
 /**
  * Mixin public API methods
+ *
+ * 将公共的接口，绑定到Vue 的原型上。
  */
 
 extend(p, require('./api/data'))
