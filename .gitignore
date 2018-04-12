@@ -1,5 +1,7 @@
-.DS_Store
-node_modules
-npm-debug.log
+dist/vue.min.js.gz
+test/unit/specs.js
 explorations
-TODOs.md
+node_modules
+.DS_Store
+benchmarks/browser.js
+coverage

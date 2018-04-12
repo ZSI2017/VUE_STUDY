@@ -1,38 +1,43 @@
 {
-  "name": "vue-lite",
-  "version": "1.0.0",
-  "description": "Lighter-weight Vue on virtual dom",
-  "main": "index.js",
-  "scripts": {
-    "dev": "webpack --watch",
-    "test": "mocha",
-    "build": "NODE_ENV=production node build/build.js"
-  },
+  "name": "vue",
+  "version": "0.11.0",
+  "author": "Evan You <yyx990803@gmail.com>",
+  "license": "MIT",
+  "description": "Simple, Fast & Composable MVVM for building interative interfaces",
+  "keywords": [
+    "mvvm",
+    "browser",
+    "framework"
+  ],
+  "main": "src/vue.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vuejs/vue-lite.git"
+    "url": "https://github.com/yyx990803/vue.git"
   },
-  "keywords": [
-    "vue"
-  ],
-  "author": "Evan You",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vuejs/vue-lite/issues"
+  "bugs": "https://github.com/yyx990803/vue/issues",
+  "homepage": "http://vuejs.org",
+  "scripts": {
+    "test": "grunt ci"
   },
-  "homepage": "https://github.com/vuejs/vue-lite#readme",
   "devDependencies": {
-    "babel-core": "^6.0.0",
-    "babel-loader": "^6.0.0",
-    "babel-preset-es2015": "^6.0.0",
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "babel-preset-stage-2": "^6.0.0",
-    "rollup": "^0.25.8",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-commonjs": "^2.2.1",
-    "rollup-plugin-node-resolve": "^1.5.0",
-    "rollup-plugin-replace": "^1.1.0",
-    "uglify-js": "^2.6.2",
-    "webpack": "^1.12.14"
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-karma": "^0.8.3",
+    "grunt-karma-coveralls": "^2.5.2",
+    "jshint-stylish": "^0.3.0",
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-commonjs": "^0.0.10",
+    "karma-coverage": "^0.2.5",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-jasmine": "^0.2.2",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-safari-launcher": "^0.1.1",
+    "karma-sauce-launcher": "^0.2.10",
+    "semver": "^4.0.3",
+    "shell-task": "^1.0.0",
+    "uglify-js": "^2.4.15",
+    "webpack": "^1.4.4"
   }
 }
