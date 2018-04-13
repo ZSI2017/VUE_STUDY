@@ -9,6 +9,7 @@ var uid = 0
 
 /**
  * Type enums
+ *  设置枚举类型。
  */
 
 var ARRAY  = 0
@@ -86,6 +87,9 @@ var p = Observer.prototype
  * returns the new observer if successfully observed,
  * or the existing observer if the value already has one.
  *
+ * Observer.create 方法，主要为传入的 value ,创造一个新的 Observer 实例
+ *  判断 Array or Object 类型后，返回 一个 新的 observer 实例
+ *  通过判断 __ob__属性，如果存在，直接返回 旧的 observer 实例。 __ob__ 隐式指向 observer 实例。
  * @param {*} value
  * @return {Observer|undefined}
  * @static

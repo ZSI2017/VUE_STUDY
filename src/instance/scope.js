@@ -36,6 +36,7 @@ exports._initData = function () {
       this._proxy(key)
     }
   }
+  // 监听 data 上的 值。
   // observe data
   Observer.create(data).addVm(this)
 }
@@ -87,6 +88,7 @@ exports._proxy = function (key) {
   // need to store ref to self here
   // because these getter/setters might
   // be called by child instances!
+  //  将 this._data 上的属性，代理到this 上。
   var self = this
   Object.defineProperty(self, key, {
     configurable: true,
